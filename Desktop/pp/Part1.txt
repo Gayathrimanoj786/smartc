@@ -10,7 +10,7 @@ public class Product
     public ArrayList product_id = new ArrayList();
     public ArrayList quantity = new ArrayList();
     public ArrayList cost = new ArrayList();
-    int count=0;
+    int count=1;
     public void add()
     {
         
