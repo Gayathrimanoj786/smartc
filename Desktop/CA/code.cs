@@ -12,7 +12,7 @@ public class Login
     public int authenticate(string user, string pass)
     {
         int i=0;
-        for (i; i < 2; i++)
+        for (i; i < 3; i++)
         {
             if (username[i].Equals(user))
             {
