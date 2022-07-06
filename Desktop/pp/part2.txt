@@ -1,0 +1,351 @@
+using System.IO;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+public class Login
+{
+    string [] username = {"admin", "gayathri@gmail.com", "sample@gmail.com"};
+    string[] password  ={"Abc@1234", "Xyz@1234","Xyz@1234"};
+    int[] type_of_user= {1,2,2};
+
+    public int authenticate(string user, string pass)
+    {
+        int i;
+       for(i=0;i<3;i++)    
+       {
+           if(username[i].Equals(user))
+           {   
+               if(password[i].Equals(pass))
+                                return type_of_user[i];
+            }
+        }
+        return -1;
+       
+    }
+  
+}
+public class Product
+{
+    public ArrayList product_name = new ArrayList();
+    public ArrayList description = new ArrayList();
+    public ArrayList product_id = new ArrayList();
+    public ArrayList quantity = new ArrayList();
+    public ArrayList cost = new ArrayList();
+    int count=0;
+    public void add()
+    {
+        
+        Console.Write("Enter Number of items to be added : ");
+        int n = Convert.ToInt32(Console.ReadLine());
+        for (int i=0;i<n;i++)
+        {
+        Console.WriteLine("Enter the Product Name, Cost of Signle Quantity, No. of Quantity, Product Description");
+        product_name.Add(Console.ReadLine());
+        cost.Add(Convert.ToDouble(Console.ReadLine()));
+        quantity.Add(Convert.ToInt32(Console.ReadLine()));
+        description.Add(Console.ReadLine());   
+          product_id.Add(++count);
+        }
+
+    }
+    public void display()
+    {
+        Console.WriteLine("List of Items added in the Stock: ");
+       for (int i=0;i<product_name.Count; i++)
+             Console.WriteLine(product_id[i] +"\t"+product_name[i]+"\t"+quantity[i] +" \t"+description[i] +"\t"+cost[i]);
+     
+    }
+    public void search(int id1)
+    {
+        int i;
+         for (i=0;i<product_name.Count; i++)
+       {
+           if(Convert.ToInt32(product_id[i])==id1)
+           {
+                Console.WriteLine("Search Result : ");
+            Console.WriteLine("Product ID = "+product_id[i]);
+            Console.WriteLine("Product Name = "+product_name[i]);
+            Console.WriteLine("Quantity = "+quantity[i]);
+            Console.WriteLine("Product Description = "+ description[i]);
+            Console.WriteLine("Cost of Single Quantity = "+cost[i]);
+            break;
+           }
+       }
+       if(i==product_id.Count)
+              Console.WriteLine("Product id not found");
+           
+    }
+      public void search(string name)
+    {
+        int i;
+         for (i=0;i<product_name.Count; i++)
+       {
+           if(Convert.ToString(product_name[i]).Equals(name))
+           {
+            Console.WriteLine("Search Result (Product name) : ");
+            Console.WriteLine("Product ID = "+product_id[i]);
+            Console.WriteLine("Product Name = "+product_name[i]);
+            Console.WriteLine("Quantity = "+quantity[i]);
+            Console.WriteLine("Product Description = "+ description[i]);
+            Console.WriteLine("Cost of Single Quantity = "+cost[i]);
+            break;
+           }
+       }
+       if(i==product_id.Count)
+              Console.WriteLine("Product Name not found");
+           
+    }
+    public void update()
+    {
+    Console.Write("\n1.Update the cost of the single quantity\n2.Update the Quantity\nEnter the choice:");
+    int ch= Convert.ToInt32(Console.ReadLine());
+    if(ch==1)
+    {
+         int i;
+         Console.Write("Enter the ID to search:");
+         int c = Convert.ToInt32(Console.ReadLine());
+         for (i=0;i<product_name.Count; i++)
+         {
+           if(Convert.ToInt32(product_id[i])==c)
+           {
+               Console.Write("Enter the update cost of the single quantity of the product:");
+               cost[i] = Convert.ToInt32(Console.ReadLine());
+               break;
+           }
+         }
+         if(i==product_name.Count)
+             Console.WriteLine("The product ID is not exist");
+    }
+    else if(ch==2)
+    {
+         int i;
+         Console.Write("Enter the ID to search:");
+         int c = Convert.ToInt32(Console.ReadLine());
+         for (i=0;i<product_name.Count; i++)
+         {
+           if(Convert.ToInt32(product_id[i])==c)
+           {
+               Console.Write("Enter the number of quantity:");
+               int m=Convert.ToInt32(Console.ReadLine()) + Convert.ToInt32(quantity[i]);
+               
+               quantity[i] = m;
+               break;
+           }
+         }
+         if(i==product_name.Count)
+             Console.WriteLine("The product ID is not exist");
+    }
+    }
+    public void delete()
+    {  int i;
+         Console.Write("Enter the ID to search:");
+         int c = Convert.ToInt32(Console.ReadLine());
+          for (i=0;i<product_name.Count; i++)
+         {
+           if(Convert.ToInt32(product_id[i])==c)
+           {
+               product_name.RemoveAt(i);
+               description.RemoveAt(i);
+               product_id.RemoveAt(i);
+               quantity.RemoveAt(i);
+               cost.RemoveAt(i);
+               display();
+               break;
+           }
+         }
+         if(i==product_name.Count)
+            Console.WriteLine("Search record is not exist. So unable to print.");
+    }
+}
+
+
+
+public class Cart_Product : Product
+{
+    ArrayList cart_product_name = new ArrayList();
+    ArrayList cart_product_description = new ArrayList();
+    ArrayList cart_product_id = new ArrayList();
+    ArrayList cart_quantity = new ArrayList();
+    ArrayList cart_cost = new ArrayList();
+    ArrayList Individual_Total_price = new ArrayList();
+    double cart_total_price=0;
+    public void cart_add()
+    {
+         int i;
+         bool f=true;
+         while(f)
+         {
+         for (i=0;i<product_name.Count; i++)
+         {
+             Console.Write("Enter the ID to search:");
+             int c = Convert.ToInt32(Console.ReadLine());
+             if(cart_product_id.Contains(c))
+             {
+                 Console.WriteLine("Already Exist. Kindly update the number of items if needed. Do you want to edit the number of items (Y/N)");
+                 string m = Console.ReadLine();
+                 if(m.Equals("Y"))
+                     cart_update();
+             }
+             else
+             {
+             for (i=0;i<product_name.Count; i++)
+             {
+                  if(Convert.ToInt32(product_id[i])==c)
+                  {
+                      Console.Write("Enter the number of quantities needed :");
+                      int m=Convert.ToInt32(Console.ReadLine());
+                      if(m<=Convert.ToInt32(quantity[i]))
+                      {
+                      cart_product_id.Add(product_id[i]);
+                      cart_product_name.Add(product_name[i]);
+                      cart_quantity.Add(m);
+                      cart_product_description.Add(description[i]);
+                      cart_cost.Add(cost[i]);
+                      Individual_Total_price.Add(m*Convert.ToDouble(cost[i]));
+                      cart_total_price  = cart_total_price + (m*Convert.ToDouble(cost[i]));
+                      Console.Write("do you want to continue :(1/0)");
+                      int h=Convert.ToInt32(Console.ReadLine());
+                      if(h==0)
+                         f=false;
+                      
+                      }
+                      else
+                      {
+                      Console.WriteLine("Unable to add in to the cart");
+                      f=false;
+                      }
+                  }
+             }
+             }
+         }
+         }
+
+    }
+    public void cart_update()
+    {
+    
+         int i;
+         Console.Write("Enter the ID to search:");
+         int c = Convert.ToInt32(Console.ReadLine());
+         for (i=0;i<cart_product_name.Count; i++)
+         {
+           if(Convert.ToInt32(product_id[i])==c)
+           {
+               Console.Write("Enter the update number of quantity needed:");
+               int m= Convert.ToInt32(Console.ReadLine());
+               double h=(Convert.ToDouble(cart_quantity[i])*Convert.ToDouble(cart_cost[i])) ;
+               cart_total_price  =cart_total_price + (m*Convert.ToDouble(cart_cost[i]));
+               Individual_Total_price[i] = h + Convert.ToDouble(cart_cost[i])*m;
+               display(); 
+               break;
+           }
+         }
+         if(i==product_name.Count)
+             Console.WriteLine("The product ID is not exist");
+    
+  
+    }
+    
+    public void cart_delete()
+    {
+         int i;
+         Console.Write("Enter the ID to search:");
+         int c = Convert.ToInt32(Console.ReadLine());
+          for (i=0;i<cart_product_name.Count; i++)
+         {
+           if(Convert.ToInt32(product_id[i])==c)
+           {
+               double h = Convert.ToDouble(cart_cost[i]) * Convert.ToDouble(cart_quantity[i]);
+               cart_total_price = cart_total_price - h;
+               cart_product_name.RemoveAt(i);
+               cart_product_description.RemoveAt(i);
+               cart_product_id.RemoveAt(i);
+               cart_quantity.RemoveAt(i);
+               cart_cost.RemoveAt(i);
+               Individual_Total_price.Remove(i);
+               display();
+               break;
+           }
+         }
+         if(i==product_name.Count)
+            Console.WriteLine("Search record is not exist. So unable to print.");
+    }
+    public void cart_display()
+    {
+          Console.WriteLine("List of Items added in the Cart: ");
+       for (int i=0;i<cart_product_name.Count; i++)
+             Console.WriteLine(cart_product_id[i] +"\t"+cart_product_name[i]+"\t"+cart_quantity[i] +" \t"+cart_product_description[i] +"\t"+cart_cost[i]+"\t"+Individual_Total_price[i]);
+       Console.WriteLine("Total Price = "+cart_total_price);
+    }
+  
+}
+
+
+class main
+{
+    public static void Main(string[] s)
+    { 
+      int ch;
+      Cart_Product p = new Cart_Product();
+      Console.WriteLine("Enter the user name : ");
+      string user = Console.ReadLine();
+      Console.WriteLine("Enter the password : ");
+      string pass = Console.ReadLine();
+      Login l = new Login();
+      int test_status = l.authenticate(user, pass);
+      Console.WriteLine("test Status = "+test_status);
+      if(test_status==1)
+      {
+      do
+      {
+       Console.Write("Menu Choices:\n1.Product Relevant \n2.Cart Relevant activities\nEnter the choice:");
+       ch= Convert.ToInt32(Console.ReadLine());  
+       if(ch==1)
+       {
+      Console.Write("\n1.Add new product\n2.Display the number of product in stock\n3.Search the details of the product using ID\n4.Search the product using product name\n5.Update the product\n6.Delete the product\nEnter the choice:");
+       ch= Convert.ToInt32(Console.ReadLine());
+        if(ch==1)
+          p.add();
+        else if(ch==2)
+           p.display();
+        else if(ch==3)
+        {
+             Console.Write("Enter the ID to search:");
+             p.search( Convert.ToInt32(Console.ReadLine()));
+        }
+        else if(ch==4)
+        {
+             Console.Write("Enter the product name to search:");
+             p.search( Console.ReadLine());
+        }
+        else if(ch==5)
+             p.update( );
+        else if(ch==6)
+             p.delete();
+        
+      }
+      else if(ch==2)
+      {
+          Console.Write("\n1.Add new product into cart\n2.Display the number of product in Cart\n3.Update the product\n4.Delete the product\nEnter the choice:");
+          ch= Convert.ToInt32(Console.ReadLine());
+          if(ch==1)
+            p.cart_add();
+          else if(ch==2)
+            p.cart_display();
+          else if(ch==3)
+             p.cart_update();
+          else if(ch==4)
+              p.cart_delete();
+       
+      }
+      }
+      while(ch<10);
+     
+    }
+    else if(test_status==2)
+    {
+        
+    }
+    }
+    
+}
