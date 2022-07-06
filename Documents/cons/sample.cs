@@ -15,7 +15,7 @@ public class Login
         StreamReader sr = new StreamReader("D://NKK/GAYATHRI/password.txt");
         sr.BaseStream.Seek(0, SeekOrigin.Begin);
         ss1 = Convert.ToInt16(sr.ReadLine());
-        int c = 1;
+        int c = 2;
         
         while (c < ss1)
         {
