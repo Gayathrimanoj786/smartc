@@ -11,8 +11,8 @@ public class Login
 
     public int authenticate(string user, string pass)
     {
-        int i;
-        for (i = 0; i < 2; i++)
+        int i=0;
+        for (i; i < 2; i++)
         {
             if (username[i].Equals(user))
             {
