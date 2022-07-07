@@ -9,7 +9,7 @@ public class Login
     ArrayList user = new ArrayList();
     ArrayList pass = new ArrayList();
     ArrayList type = new ArrayList();
-    int ss1
+    int ss1 =0;
     string[] m = { "" };
     public void load()
     {
