@@ -9,7 +9,7 @@ public class Login
     ArrayList user = new ArrayList();
     ArrayList pass = new ArrayList();
     ArrayList type = new ArrayList();
-    int ss1;
+    int ss1
     string[] m = { "" };
     public void load()
     {
@@ -63,7 +63,7 @@ public class Login
         Console.WriteLine("Enter the new User Name");
         string s = Console.ReadLine();
 
-        int i;
+        int i=ssn
         for (i = 0; i < user.Count; i++)
         {
             if (user[i].Equals(s))
